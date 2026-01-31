@@ -3,15 +3,13 @@ let mySchedule = JSON.parse(localStorage.getItem('nextbell_data')) || [
     { name: "Физика", start: "09:40", end: "10:25" }
 ];
 
-
 function showScreen(name) {
     // Прячем все экраны по новому классу
     document.querySelectorAll('.app-screen').forEach(s => s.style.display = 'none');
-    // Показываем нужный блок
+    // Показываем нужный
     const target = document.getElementById(`screen-${name}`);
-    if (target) target.style.display = 'flex'; // Используем flex для верстки
+    if (target) target.style.display = 'flex'; 
 }
-
 
 function toggleTheme() {
     const isDark = document.body.getAttribute('data-theme') === 'dark';
@@ -19,7 +17,6 @@ function toggleTheme() {
     document.body.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
 }
-
 
 function updateApp() {
     const now = new Date();
@@ -29,45 +26,39 @@ function updateApp() {
     if (clockEl) clockEl.innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
     let html = "";
-    let activeFound = false;
-
     mySchedule.forEach(l => {
         const [h1, m1] = l.start.split(':').map(Number);
         const [h2, m2] = l.end.split(':').map(Number);
         const s = h1 * 60 + m1;
         const e = h2 * 60 + m2;
-
         const isActive = cur >= s && cur < e;
+
+        html += `<div class="lesson-item ${isActive ? 'active' : ''}">
+                    <span>${l.name}</span>
+                    <span>${l.start} - ${l.end}</span>
+                 </div>`;
+        
         if (isActive) {
-            html += `<div class="lesson-item active">
-                        <span><b>${l.name}</b><br>${l.start}-${l.end}</span> 
-                        <span>Сейчас</span>
-                     </div>`;
-            document.getElementById('status').innerText = `${e - cur} мин до звонка`;
-            activeFound = true;
-        } else {
-            html += `<div class="lesson-item"><span><b>${l.name}</b><br>${l.start}-${l.end}</span></div>`;
+            document.getElementById('status').innerText = `Сейчас: ${l.name}`;
         }
     });
-
-    if(!activeFound) document.getElementById('status').innerText = "Перемена / Уроки окончены";
+    
     const listEl = document.getElementById('schedule-list');
     if (listEl) listEl.innerHTML = html;
 }
 
-
 function renderEditor() {
-    const container = document.getElementById('edit-list');
-    if (!container) return;
-    container.innerHTML = '';
+    const editList = document.getElementById('edit-list');
+    if (!editList) return;
+    editList.innerHTML = "";
     mySchedule.forEach((l, i) => {
-        container.innerHTML += `
-            <div class="lesson-input" style="background: var(--card); margin: 10px 20px; padding: 15px; border-radius: 15px; display: flex; flex-direction: column; gap: 10px; border: 1px solid #ddd;">
-                <input type="text" value="${l.name}" onchange="editLesson(${i}, 'name', this.value)" style="font-weight: bold;">
+        editList.innerHTML += `
+            <div class="setting-item" style="flex-direction: column; align-items: stretch; gap: 10px;">
+                <input type="text" value="${l.name}" onchange="editLesson(${i}, 'name', this.value)" style="padding: 8px; border-radius: 8px; border: 1px solid #ddd;">
                 <div style="display: flex; gap: 10px;">
-                    <input type="time" value="${l.start}" onchange="editLesson(${i}, 'start', this.value)">
-                    <input type="time" value="${l.end}" onchange="editLesson(${i}, 'end', this.value)">
-                    <button onclick="removeLesson(${i})">🗑️</button>
+                    <input type="time" value="${l.start}" onchange="editLesson(${i}, 'start', this.value)" style="flex: 1; padding: 5px;">
+                    <input type="time" value="${l.end}" onchange="editLesson(${i}, 'end', this.value)" style="flex: 1; padding: 5px;">
+                    <button onclick="removeLesson(${i})" style="background: none; border: none; font-size: 20px; cursor: pointer;">🗑️</button>
                 </div>
             </div>`;
     });
@@ -78,9 +69,11 @@ function addLesson() { mySchedule.push({name: "Новый урок", start: "12:
 function removeLesson(i) { mySchedule.splice(i, 1); saveData(); renderEditor(); }
 function saveData() { localStorage.setItem('nextbell_data', JSON.stringify(mySchedule)); updateApp(); }
 
-
+// Инициализация
 const savedTheme = localStorage.getItem('theme') || 'light';
 document.body.setAttribute('data-theme', savedTheme);
+document.getElementById('theme-toggle').checked = savedTheme === 'dark';
+
 setInterval(updateApp, 1000);
 updateApp();
 renderEditor();
@@ -88,19 +81,3 @@ renderEditor();
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(err => console.log(err));
 }
-
-
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
-        .then(() => console.log("PWA Ready"))
-        .catch(err => console.log("PWA Error", err));
-}
-
-
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  console.log('Готов к установке!');
-});
-
