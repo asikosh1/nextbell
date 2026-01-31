@@ -20,30 +20,47 @@ function toggleTheme() {
 
 function updateApp() {
     const now = new Date();
-    const cur = now.getHours() * 60 + now.getMinutes();
+    const curHours = now.getHours();
+    const curMinutes = now.getMinutes();
+    const curTotalMinutes = curHours * 60 + curMinutes;
     
+    // Обновляем часы (с секундами для жизни)
     const clockEl = document.getElementById('clock');
-    if (clockEl) clockEl.innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    if (clockEl) {
+        clockEl.innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    }
 
     let html = "";
+    let currentStatus = "Перемена или уроки закончились";
+
     mySchedule.forEach(l => {
         const [h1, m1] = l.start.split(':').map(Number);
         const [h2, m2] = l.end.split(':').map(Number);
-        const s = h1 * 60 + m1;
-        const e = h2 * 60 + m2;
-        const isActive = cur >= s && cur < e;
-
-        html += `<div class="lesson-item ${isActive ? 'active' : ''}">
-                    <span>${l.name}</span>
-                    <span>${l.start} - ${l.end}</span>
-                 </div>`;
+        const startTotal = h1 * 60 + m1;
+        const endTotal = h2 * 60 + m2;
         
+        // Проверяем, идет ли урок сейчас
+        const isActive = curTotalMinutes >= startTotal && curTotalMinutes < endTotal;
+
         if (isActive) {
-            document.getElementById('status').innerText = `Сейчас: ${l.name}`;
+            currentStatus = `Сейчас: ${l.name}`;
         }
+
+        html += `
+            <div class="lesson-item ${isActive ? 'active' : ''}">
+                <div class="lesson-info">
+                    <span class="lesson-name" style="font-weight: bold;">${l.name}</span>
+                    <br>
+                    <small>${l.start} — ${l.end}</small>
+                </div>
+                ${isActive ? '<span class="status-badge">🔥 ИДЕТ</span>' : ''}
+            </div>`;
     });
     
+    const statusEl = document.getElementById('status');
     const listEl = document.getElementById('schedule-list');
+    
+    if (statusEl) statusEl.innerText = currentStatus;
     if (listEl) listEl.innerHTML = html;
 }
 
@@ -81,3 +98,4 @@ renderEditor();
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(err => console.log(err));
 }
+
