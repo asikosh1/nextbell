@@ -93,3 +93,10 @@ if ('serviceWorker' in navigator) {
         .catch(err => console.log("PWA Error", err));
 }
 
+
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  console.log('Готов к установке!');
+});
