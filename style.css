@@ -19,6 +19,14 @@ body {
     font-family: -apple-system, system-ui, sans-serif;
     margin: 0;
     transition: 0.3s;
+    overflow-x: hidden;
+}
+
+/* Фикс, чтобы контент не перекрывался нижней панелью */
+.screen {
+    padding-bottom: 100px; 
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 .timer-card {
@@ -50,30 +58,38 @@ body {
     border: 2px solid var(--primary);
 }
 
+/* Исправленная навигация */
 .bottom-nav {
-    position: absolute; 
-    bottom: 20px;
+    position: fixed; /* Прижимаем к низу экрана намертво */
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 90%;
+    width: 100%;
+    max-width: 500px; /* Чтобы на широких мобилках не растягивалось слишком сильно */
     display: flex;
     justify-content: space-around;
-    background: white;
-    padding: 12px;
-    border-radius: 20px;
-    box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
-    z-index: 100;
+    background: var(--card);
+    padding: 10px 0;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -5px 25px rgba(0,0,0,0.1);
+    z-index: 999;
 }
 
 .bottom-nav button {
     flex: 1; border: none; background: none; padding: 15px;
     font-size: 16px; color: var(--text); cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
 }
 
 .setting-item {
     background: var(--card); margin: 10px 20px;
     padding: 20px; border-radius: 15px;
     display: flex; justify-content: space-between;
+    align-items: center;
 }
 
 input[type="text"], input[type="time"] {
@@ -90,7 +106,7 @@ input[type="text"], input[type="time"] {
     opacity: 0.9;
 }
 
-
+/* Оптимизация для ПК и Планшетов */
 @media (min-width: 768px) {
     body {
         background: #1a1a1a; 
@@ -98,11 +114,11 @@ input[type="text"], input[type="time"] {
         justify-content: center;
         align-items: center;
         height: 100vh;
-        margin: 0;
     }
     #screen-main, #screen-settings {
         width: 400px; 
         height: 80vh;
+        min-height: auto;
         background: var(--bg);
         border: 8px solid #333;
         border-radius: 40px;
@@ -110,10 +126,9 @@ input[type="text"], input[type="time"] {
         position: relative;
     }
     .bottom-nav {
-        width: 400px;
-        left: 50% !important;
-        transform: translateX(-50%);
+        position: absolute; /* Внутри рамки телефона на ПК */
+        width: 100%;
+        max-width: 100%;
         border-radius: 0 0 32px 32px;
     }
 }
-
