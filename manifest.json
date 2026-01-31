@@ -2,7 +2,7 @@
   "name": "NextBell",
   "short_name": "NextBell",
   "description": "Расписание уроков с таймером",
-  "start_url": ".",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4a753c",
