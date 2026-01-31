@@ -3,49 +3,56 @@
     --primary: #4a753c; --accent: #a8d5a2;
 }
 [data-theme="dark"] {
-    --bg: #121212; --text: #ffffff; --card: #1e1e1e;
+    --bg: #121212; --text: #ffffff; --card: #1e1e1e; --primary: #2d5a27;
 }
 
 body {
     background-color: #1a1a1a; /* Фон вокруг телефона на ПК */
+    color: var(--text);
+    font-family: -apple-system, sans-serif;
     margin: 0; display: flex; justify-content: center; align-items: center;
-    height: 100vh; font-family: sans-serif;
+    height: 100vh; overflow: hidden;
 }
 
-/* КОРПУС ТЕЛЕФОНА */
+/* ГЛАВНЫЙ КОРПУС */
 .phone-shell {
-    width: 100%; max-width: 400px; height: 100vh;
-    max-height: 850px; background: var(--bg);
-    position: relative; overflow: hidden;
+    width: 100%; max-width: 400px; 
+    height: 100vh; max-height: 850px; 
+    background: var(--bg);
+    position: relative; /* Чтобы кнопки меню были внутри */
     display: flex; flex-direction: column;
     border: 8px solid #333; border-radius: 40px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    overflow: hidden;
 }
 
-/* ЭКРАНЫ */
-.screen {
-    flex: 1; overflow-y: auto; padding-bottom: 80px;
-    display: flex; flex-direction: column;
+/* ЭКРАНЫ ВНУТРИ */
+.app-screen {
+    flex: 1; overflow-y: auto;
+    padding-bottom: 80px; /* Место для меню */
 }
 
-/* ФИКС НАВИГАЦИИ (Прилипла к низу корпуса) */
+/* МЕНЮ (ПРИВЯЗАНО К НИЗУ КОРПУСА) */
 .bottom-nav {
     position: absolute; bottom: 0; left: 0; width: 100%;
-    background: var(--card); display: flex;
-    padding: 10px 0; border-top: 1px solid #ddd;
+    display: flex; justify-content: space-around;
+    background: var(--card); padding: 10px 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
     z-index: 100;
 }
 
 .bottom-nav button {
     flex: 1; border: none; background: none; padding: 15px;
-    font-size: 14px; color: var(--text); cursor: pointer;
+    font-size: 14px; color: var(--text); cursor: pointer; font-weight: 600;
 }
 
-/* МОБИЛЬНАЯ ВЕРСИЯ (Убираем рамки) */
+/* МОБИЛЬНАЯ ВЕРСИЯ (РАСТЯГИВАЕМ) */
 @media (max-width: 450px) {
     .phone-shell { border: none; border-radius: 0; max-height: 100vh; }
 }
 
-/* Твои карточки и таймер оставляем как были */
+/* СТИЛИ КОНТЕНТА */
 .timer-card { background: var(--primary); color: white; margin: 15px; padding: 25px; border-radius: 20px; text-align: center; }
 .time-now { font-size: 56px; font-weight: 800; margin: 0; }
+.lesson-item { background: var(--card); margin: 10px 15px; padding: 18px; border-radius: 15px; display: flex; justify-content: space-between; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+.setting-item { background: var(--card); margin: 10px 20px; padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; }
