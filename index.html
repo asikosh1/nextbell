@@ -1,48 +1,41 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link rel="icon" type="image/png" href="icon.png">
-    <link rel="apple-touch-icon" href="icon.png">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4a753c">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>NextBell</title>
-    <link rel="stylesheet" href="style.css"> </head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
 <body data-theme="light">
-
-    <div id="screen-main" class="screen">
-        <div class="timer-card">
-            <p class="time-now" id="clock">00:00</p>
-            <p class="sub-text" id="status">Загрузка...</p>
+    <div class="phone-container">
+        
+        <div id="screen-main" class="screen">
+            <div class="timer-card">
+                <p class="time-now" id="clock">00:00</p>
+                <p class="sub-text" id="status">Загрузка...</p>
+            </div>
+            <div id="schedule-list"></div>
         </div>
-        <div id="schedule-list"></div>
-    </div>
 
-    <div id="screen-settings" class="screen" style="display:none;">
-    <h2 style="padding: 20px;">Настройки</h2>
-    <div class="setting-item">
-        <span>Тёмная тема:</span>
-        <input type="checkbox" id="theme-toggle" onclick="toggleTheme()">
-    </div>
-    
-    <h3 style="padding: 0 20px;">Расписание</h3>
-    <div id="edit-list">
+        <div id="screen-settings" class="screen" style="display:none;">
+            <h2 style="padding: 20px;">Настройки</h2>
+            <div class="setting-item">
+                <span>Тёмная тема:</span>
+                <input type="checkbox" id="theme-toggle" onclick="toggleTheme()">
+            </div>
+            <div id="edit-list"></div>
+            <div style="padding: 20px;">
+                <button class="add-btn" onclick="addLesson()">+ Добавить</button>
+            </div>
         </div>
-    
-    <div style="padding: 20px;">
-        <button class="add-btn" onclick="addLesson()" style="width: 100%; padding: 15px; border-radius: 12px; background: var(--primary); color: white; border: none; font-weight: bold;">
-            + Добавить предмет
-        </button>
+
+        <nav class="bottom-nav">
+            <button onclick="showScreen('main')">📅 Время</button>
+            <button onclick="showScreen('settings')">⚙️ Настройки</button>
+        </nav>
     </div>
-</div>
 
-    <nav class="bottom-nav">
-        <button onclick="showScreen('main')">📅 Время</button>
-        <button onclick="showScreen('settings')">⚙️ Настройки</button>
-    </nav>
-
-    <script src="script.js"></script> </body>
+    <script src="script.js"></script>
+</body>
 </html>
-
-
