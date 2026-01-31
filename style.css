@@ -2,7 +2,7 @@
     --bg: #f8f9fa;
     --text: #1a1a1a;
     --card: #ffffff;
-    --primary: #4a753c; 
+    --primary: #4a753c; /* Тот самый зеленый с видео */
     --accent: #a8d5a2;
 }
 
@@ -80,25 +80,4 @@ input[type="text"], input[type="time"] {
 .add-btn:active {
     transform: scale(0.98);
     opacity: 0.9;
-
-}
-
-
-@media (min-width: 600px) {
-    body {
-        display: flex;
-        justify-content: center;
-        background-color: #333; 
-    }
-    
-    .screen, .bottom-nav {
-        max-width: 450px; 
-        left: 50% !important;
-        transform: translateX(-50%);
-        box-shadow: 0 0 50px rgba(0,0,0,0.5);
-    }
-
-    .bottom-nav {
-        border-radius: 20px 20px 0 0;
-    }
 }
