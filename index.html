@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>NextBell</title>
+    <link rel="stylesheet" href="style.css"> </head>
+<body data-theme="light">
+
+    <div id="screen-main" class="screen">
+        <div class="timer-card">
+            <p class="time-now" id="clock">00:00</p>
+            <p class="sub-text" id="status">Загрузка...</p>
+        </div>
+        <div id="schedule-list"></div>
+    </div>
+
+    <div id="screen-settings" class="screen" style="display:none;">
+    <h2 style="padding: 20px;">Настройки</h2>
+    <div class="setting-item">
+        <span>Тёмная тема:</span>
+        <input type="checkbox" id="theme-toggle" onclick="toggleTheme()">
+    </div>
+    
+    <h3 style="padding: 0 20px;">Расписание</h3>
+    <div id="edit-list">
+        </div>
+    
+    <div style="padding: 20px;">
+        <button class="add-btn" onclick="addLesson()" style="width: 100%; padding: 15px; border-radius: 12px; background: var(--primary); color: white; border: none; font-weight: bold;">
+            + Добавить предмет
+        </button>
+    </div>
+</div>
+
+    <nav class="bottom-nav">
+        <button onclick="showScreen('main')">📅 Время</button>
+        <button onclick="showScreen('settings')">⚙️ Настройки</button>
+    </nav>
+
+    <script src="script.js"></script> </body>
+</html>

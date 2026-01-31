@@ -1,0 +1,83 @@
+:root {
+    --bg: #f8f9fa;
+    --text: #1a1a1a;
+    --card: #ffffff;
+    --primary: #4a753c; /* Тот самый зеленый с видео */
+    --accent: #a8d5a2;
+}
+
+[data-theme="dark"] {
+    --bg: #121212;
+    --text: #ffffff;
+    --card: #1e1e1e;
+    --primary: #2d5a27;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, system-ui, sans-serif;
+    margin: 0;
+    transition: 0.3s;
+}
+
+.timer-card {
+    background-color: var(--primary);
+    color: white;
+    margin: 20px;
+    padding: 30px;
+    border-radius: 28px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.time-now { font-size: 64px; font-weight: 800; margin: 0; }
+
+.lesson-item {
+    background: var(--card);
+    margin: 10px 20px;
+    padding: 20px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.lesson-item.active {
+    background-color: var(--accent);
+    color: #1a3a16;
+    border: 2px solid var(--primary);
+}
+
+.bottom-nav {
+    position: fixed; bottom: 0; width: 100%;
+    background: var(--card);
+    display: flex; border-top: 1px solid rgba(0,0,0,0.1);
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+.bottom-nav button {
+    flex: 1; border: none; background: none; padding: 15px;
+    font-size: 16px; color: var(--text); cursor: pointer;
+}
+
+.setting-item {
+    background: var(--card); margin: 10px 20px;
+    padding: 20px; border-radius: 15px;
+    display: flex; justify-content: space-between;
+}
+
+input[type="text"], input[type="time"] {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.add-btn:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+}
