@@ -7,35 +7,45 @@
 }
 
 body {
-    background-color: #1a1a1a;
-    display: flex; justify-content: center; align-items: center;
-    height: 100vh; margin: 0; font-family: sans-serif;
+    background-color: #1a1a1a; /* Фон вокруг телефона на ПК */
+    margin: 0; display: flex; justify-content: center; align-items: center;
+    height: 100vh; font-family: sans-serif;
 }
 
-.phone-container {
+/* КОРПУС ТЕЛЕФОНА */
+.phone-shell {
     width: 100%; max-width: 400px; height: 100vh;
-    max-height: 800px; background: var(--bg);
+    max-height: 850px; background: var(--bg);
     position: relative; overflow: hidden;
-    border-radius: 30px; border: 8px solid #333;
+    display: flex; flex-direction: column;
+    border: 8px solid #333; border-radius: 40px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
+/* ЭКРАНЫ */
 .screen {
-    height: 100%; overflow-y: auto;
-    padding-bottom: 80px; /* Чтобы меню не закрывало контент */
+    flex: 1; overflow-y: auto; padding-bottom: 80px;
+    display: flex; flex-direction: column;
 }
 
-.timer-card {
-    background: var(--primary); color: white;
-    margin: 20px; padding: 30px; border-radius: 20px; text-align: center;
-}
-
+/* ФИКС НАВИГАЦИИ (Прилипла к низу корпуса) */
 .bottom-nav {
-    position: absolute; bottom: 0; width: 100%;
-    display: flex; background: var(--card);
-    border-top: 1px solid #ddd; padding: 10px 0;
+    position: absolute; bottom: 0; left: 0; width: 100%;
+    background: var(--card); display: flex;
+    padding: 10px 0; border-top: 1px solid #ddd;
+    z-index: 100;
 }
 
 .bottom-nav button {
-    flex: 1; border: none; background: none; cursor: pointer;
-    font-size: 14px; color: var(--text);
+    flex: 1; border: none; background: none; padding: 15px;
+    font-size: 14px; color: var(--text); cursor: pointer;
 }
+
+/* МОБИЛЬНАЯ ВЕРСИЯ (Убираем рамки) */
+@media (max-width: 450px) {
+    .phone-shell { border: none; border-radius: 0; max-height: 100vh; }
+}
+
+/* Твои карточки и таймер оставляем как были */
+.timer-card { background: var(--primary); color: white; margin: 15px; padding: 25px; border-radius: 20px; text-align: center; }
+.time-now { font-size: 56px; font-weight: 800; margin: 0; }
