@@ -88,9 +88,8 @@ if ('serviceWorker' in navigator) {
 
 
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js')
-      .then(reg => console.log('SW зарегистрирован!', reg))
-      .catch(err => console.log('Ошибка SW:', err));
-  });
+        .then(() => console.log("PWA Ready"))
+        .catch(err => console.log("PWA Error", err));
 }
+
