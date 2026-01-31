@@ -51,10 +51,18 @@ body {
 }
 
 .bottom-nav {
-    position: fixed; bottom: 0; width: 100%;
-    background: var(--card);
-    display: flex; border-top: 1px solid rgba(0,0,0,0.1);
-    padding-bottom: env(safe-area-inset-bottom);
+    position: absolute; 
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    background: white;
+    padding: 12px;
+    border-radius: 20px;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+    z-index: 100;
 }
 
 .bottom-nav button {
@@ -108,3 +116,4 @@ input[type="text"], input[type="time"] {
         border-radius: 0 0 32px 32px;
     }
 }
+
