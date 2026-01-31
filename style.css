@@ -82,9 +82,10 @@ input[type="text"], input[type="time"] {
     opacity: 0.9;
 }
 
+
 @media (min-width: 768px) {
     body {
-        background-color: #1a1a1a;
+        background: #1a1a1a; 
         display: flex;
         justify-content: center;
         align-items: center;
@@ -92,16 +93,16 @@ input[type="text"], input[type="time"] {
         margin: 0;
     }
     #screen-main, #screen-settings {
-        max-width: 400px;
+        width: 400px; 
         height: 80vh;
+        background: var(--bg);
         border: 8px solid #333;
         border-radius: 40px;
-        background: var(--bg);
         overflow-y: auto;
         position: relative;
     }
     .bottom-nav {
-        max-width: 400px;
+        width: 400px;
         left: 50% !important;
         transform: translateX(-50%);
         border-radius: 0 0 32px 32px;
