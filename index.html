@@ -1,7 +1,7 @@
 <body data-theme="light">
     <div class="phone-shell">
         
-        <div id="screen-main" class="screen">
+        <div id="screen-main" class="app-screen">
             <div class="timer-card">
                 <p class="time-now" id="clock">00:00</p>
                 <p class="sub-text" id="status">Загрузка...</p>
@@ -9,10 +9,17 @@
             <div id="schedule-list"></div>
         </div>
 
-        <div id="screen-settings" class="screen" style="display:none;">
-            <h2 style="padding: 20px;">Настройки</h2>
+        <div id="screen-settings" class="app-screen" style="display:none;">
+            <h2 style="padding: 20px; margin: 0;">Настройки</h2>
+            <div class="setting-item">
+                <span>Тёмная тема:</span>
+                <input type="checkbox" id="theme-toggle" onclick="toggleTheme()">
+            </div>
+            <h3 style="padding: 0 20px;">Расписание</h3>
             <div id="edit-list"></div>
-             <button class="add-btn" onclick="addLesson()">+ Добавить</button>
+            <div style="padding: 20px;">
+                <button class="add-btn" onclick="addLesson()" style="width: 100%; padding: 15px; border-radius: 12px; background: var(--primary); color: white; border: none; cursor: pointer;">+ Добавить предмет</button>
+            </div>
         </div>
 
         <nav class="bottom-nav">
@@ -20,4 +27,6 @@
             <button onclick="showScreen('settings')">⚙️ Настройки</button>
         </nav>
     </div>
+
+    <script src="script.js"></script>
 </body>
