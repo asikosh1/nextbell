@@ -2,7 +2,7 @@
     --bg: #f8f9fa;
     --text: #1a1a1a;
     --card: #ffffff;
-    --primary: #4a753c; /* Тот самый зеленый с видео */
+    --primary: #4a753c;
     --accent: #a8d5a2;
 }
 
@@ -19,13 +19,20 @@ body {
     font-family: -apple-system, system-ui, sans-serif;
     margin: 0;
     transition: 0.3s;
-    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-/* Фикс, чтобы контент не перекрывался нижней панелью */
+
 .screen {
-    padding-bottom: 100px; 
-    min-height: 100vh;
+    width: 100vw;
+    height: 100vh;
+    background: var(--bg);
+    position: relative;
+    overflow-y: auto;
+    padding-bottom: 80px; 
     box-sizing: border-box;
 }
 
@@ -58,77 +65,53 @@ body {
     border: 2px solid var(--primary);
 }
 
-/* Исправленная навигация */
+
 .bottom-nav {
-    position: fixed; /* Прижимаем к низу экрана намертво */
-    bottom: 0;
+    position: fixed; 
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%;
-    max-width: 500px; /* Чтобы на широких мобилках не растягивалось слишком сильно */
+    width: 90%;
+    max-width: 360px; 
     display: flex;
     justify-content: space-around;
     background: var(--card);
-    padding: 10px 0;
-    border-top: 1px solid rgba(0,0,0,0.05);
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 -5px 25px rgba(0,0,0,0.1);
-    z-index: 999;
+    padding: 8px;
+    border-radius: 24px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    z-index: 1000;
 }
 
 .bottom-nav button {
-    flex: 1; border: none; background: none; padding: 15px;
-    font-size: 16px; color: var(--text); cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
+    flex: 1; border: none; background: none; padding: 12px;
+    font-size: 14px; color: var(--text); cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
 }
+
+.bottom-nav button:active { transform: scale(0.9); }
 
 .setting-item {
     background: var(--card); margin: 10px 20px;
     padding: 20px; border-radius: 15px;
     display: flex; justify-content: space-between;
-    align-items: center;
 }
 
-input[type="text"], input[type="time"] {
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-family: inherit;
-    background: var(--bg);
-    color: var(--text);
-}
 
-.add-btn:active {
-    transform: scale(0.98);
-    opacity: 0.9;
-}
-
-/* Оптимизация для ПК и Планшетов */
 @media (min-width: 768px) {
-    body {
-        background: #1a1a1a; 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-    #screen-main, #screen-settings {
+    body { background: #1a1a1a; }
+    
+    .screen {
         width: 400px; 
         height: 80vh;
-        min-height: auto;
-        background: var(--bg);
-        border: 8px solid #333;
-        border-radius: 40px;
-        overflow-y: auto;
-        position: relative;
+        border: 10px solid #333;
+        border-radius: 45px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     }
+
     .bottom-nav {
-        position: absolute; /* Внутри рамки телефона на ПК */
-        width: 100%;
-        max-width: 100%;
-        border-radius: 0 0 32px 32px;
+        position: absolute; 
+        bottom: 20px;
+        width: 85%;
     }
 }
