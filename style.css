@@ -81,3 +81,28 @@ input[type="text"], input[type="time"] {
     transform: scale(0.98);
     opacity: 0.9;
 }
+
+@media (min-width: 700px) {
+    body {
+        background: #121212; /* Фон вокруг прилы */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .screen {
+        width: 375px; /* Ширина как у смартфона */
+        height: 700px;
+        border: 10px solid #333;
+        border-radius: 40px;
+        position: relative;
+        background: var(--bg);
+        overflow-y: auto;
+    }
+    .bottom-nav {
+        width: 375px;
+        left: 50% !important;
+        transform: translateX(-50%);
+        border-radius: 0 0 30px 30px;
+    }
+}
