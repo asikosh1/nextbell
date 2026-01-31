@@ -5,8 +5,11 @@ let mySchedule = JSON.parse(localStorage.getItem('nextbell_data')) || [
 
 
 function showScreen(name) {
-    document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
-    document.getElementById(`screen-${name}`).style.display = 'block';
+    // Прячем все экраны по новому классу
+    document.querySelectorAll('.app-screen').forEach(s => s.style.display = 'none');
+    // Показываем нужный блок
+    const target = document.getElementById(`screen-${name}`);
+    if (target) target.style.display = 'flex'; // Используем flex для верстки
 }
 
 
@@ -100,3 +103,4 @@ window.addEventListener('beforeinstallprompt', (e) => {
   deferredPrompt = e;
   console.log('Готов к установке!');
 });
+
