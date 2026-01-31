@@ -82,27 +82,28 @@ input[type="text"], input[type="time"] {
     opacity: 0.9;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 768px) {
     body {
-        background: #121212; /* Фон вокруг прилы */
+        background-color: #1a1a1a;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
+        margin: 0;
     }
-    .screen {
-        width: 375px; /* Ширина как у смартфона */
-        height: 700px;
-        border: 10px solid #333;
+    #screen-main, #screen-settings {
+        max-width: 400px;
+        height: 80vh;
+        border: 8px solid #333;
         border-radius: 40px;
-        position: relative;
         background: var(--bg);
         overflow-y: auto;
+        position: relative;
     }
     .bottom-nav {
-        width: 375px;
+        max-width: 400px;
         left: 50% !important;
         transform: translateX(-50%);
-        border-radius: 0 0 30px 30px;
+        border-radius: 0 0 32px 32px;
     }
 }
