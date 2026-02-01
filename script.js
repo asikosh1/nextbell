@@ -16,51 +16,55 @@ function toggleTheme() {
     localStorage.setItem('theme', newTheme);
 }
 
+// Скрываем логотип через 2 секунды
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        const splash = document.getElementById('splash-screen');
+        splash.style.opacity = '0';
+        setTimeout(() => splash.style.visibility = 'hidden', 500);
+    }, 2000);
+});
+
 function updateApp() {
     const now = new Date();
     const curH = now.getHours();
     const curM = now.getMinutes();
     const curTotal = curH * 60 + curM;
     
-    // ФИКС МИНУТ: Теперь часы и минуты отображаются четко
+    // Часы в формате 00:00
     const clockEl = document.getElementById('clock');
     if (clockEl) {
-        const h = String(curH).padStart(2, '0');
-        const m = String(curM).padStart(2, '0');
-        clockEl.innerText = `${h}:${m}`;
+        clockEl.innerText = `${String(curH).padStart(2, '0')}:${String(curM).padStart(2, '0')}`;
     }
 
     let html = "";
-    let currentLessonName = "Перемена";
+    let statusText = "Уроков нет";
 
     mySchedule.forEach(l => {
         const [h1, m1] = l.start.split(':').map(Number);
         const [h2, m2] = l.end.split(':').map(Number);
-        const startTotal = h1 * 60 + m1;
-        const endTotal = h2 * 60 + m2;
+        const s = h1 * 60 + m1;
+        const e = h2 * 60 + m2;
 
-        // ПРОВЕРКА: Идет ли урок сейчас
-        const isActive = curTotal >= startTotal && curTotal < endTotal;
+        const isActive = curTotal >= s && curTotal < e;
 
         if (isActive) {
-            currentLessonName = `Сейчас: ${l.name}`;
+            const timeLeft = e - curTotal;
+            statusText = `До конца урока: ${timeLeft} мин`;
         }
 
         html += `
             <div class="lesson-item ${isActive ? 'active' : ''}">
-                <div class="lesson-info">
-                    <span style="font-weight: bold; display: block;">${l.name}</span>
-                    <small style="opacity: 0.7;">${l.start} — ${l.end}</small>
+                <div>
+                    <b>${l.name}</b><br>
+                    <small>${l.start} - ${l.end}</small>
                 </div>
-                ${isActive ? '<span class="status-dot">●</span>' : ''}
+                ${isActive ? '<span>🔥</span>' : ''}
             </div>`;
     });
     
-    const statusEl = document.getElementById('status');
-    const listEl = document.getElementById('schedule-list');
-    
-    if (statusEl) statusEl.innerText = currentLessonName;
-    if (listEl) listEl.innerHTML = html;
+    document.getElementById('status').innerText = statusText;
+    document.getElementById('schedule-list').innerHTML = html;
 }
 
 function renderEditor() {
@@ -96,3 +100,4 @@ renderEditor();
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(err => console.log(err));
 }
+
