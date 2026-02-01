@@ -15,6 +15,17 @@ body {
     justify-content: center; align-items: center; height: 100vh; 
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
     overflow: hidden; color: var(--text);
+    
+    /* ОТКЛЮЧАЕМ ВЫДЕЛЕНИЕ ТЕКСТА */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none;      /* Windows/Edge */
+    user-select: none;         /* Стандарт */
+}
+
+/* Разрешаем выделение только внутри инпутов в настройках, чтобы можно было писать название урока */
+input, textarea {
+    -webkit-user-select: text;
+    user-select: text;
 }
 
 /* SPLASH SCREEN (Теперь черный) */
@@ -62,3 +73,4 @@ input {
 
 .lesson-item { background: var(--card); margin: 10px 15px; padding: 18px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 .lesson-item.active { border: 2px solid var(--primary); background: var(--accent); }
+
