@@ -7,19 +7,17 @@
     --primary: #2d5a27 !important; --accent: #1b3319 !important;
 }
 
-/* ПЛАВНОСТЬ И ЗАПРЕТ КОПИРОВАНИЯ */
+/* ЗАПРЕТ ВЫДЕЛЕНИЯ И ПЛАВНОСТЬ */
 * { 
     transition: background-color 0.4s ease, color 0.4s ease; 
     -webkit-user-select: none; user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
-
-/* Разрешаем выделение только в полях ввода */
 input { -webkit-user-select: text; user-select: text; }
 
 body {
     background-color: #000; margin: 0; display: flex; 
-    justify-content: center; align-items: center; height: 100vh; 
+    justify-content: center; align-items: center; min-height: 100vh; 
     font-family: -apple-system, system-ui, sans-serif; overflow: hidden;
 }
 
@@ -32,31 +30,37 @@ body {
 .splash-logo { width: 120px; height: 120px; animation: pulse 1.5s infinite; }
 .splash-text { color: #ffffff !important; font-size: 24px; margin-top: 20px; font-weight: bold; }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
+/* ФИКС ВЫСОТЫ ПОД ЭКРАН */
 .phone-shell {
     width: 100%; max-width: 450px; height: 100vh;
     background: var(--bg); position: relative; display: flex; flex-direction: column;
 }
 
-.app-screen { flex: 1; overflow-y: auto; padding-bottom: 100px; display: none; flex-direction: column; }
+/* ОТСТУПЫ ПОД ЧЕЛКУ И ПОЛОСКУ */
+.app-screen { 
+    flex: 1; overflow-y: auto; display: none; flex-direction: column;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: calc(85px + env(safe-area-inset-bottom));
+}
+#screen-main { display: flex; }
 
-/* БЕЛЫЙ ШРИФТ В ТЕМНОЙ ТЕМЕ */
 h2, h3, span, p, div, b, small { color: var(--text) !important; }
 
 .timer-card { background: var(--primary) !important; margin: 15px; padding: 25px; border-radius: 20px; text-align: center; }
 .timer-card * { color: #ffffff !important; }
 .time-now { font-size: 64px; font-weight: 800; margin: 0; }
 
-.lesson-item { background: var(--card); margin: 10px 15px; padding: 18px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.lesson-item { background: var(--card); margin: 8px 15px; padding: 18px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 .lesson-item.active { border: 2px solid var(--primary); background: var(--accent); }
 
+/* ФИКС НИЖНЕГО МЕНЮ */
 .bottom-nav {
-    position: absolute; bottom: 0; width: 100%; height: 75px;
-    background: var(--card); display: flex; border-top: 1px solid rgba(128,128,128,0.2);
+    position: absolute; bottom: 0; width: 100%; 
+    height: calc(75px + env(safe-area-inset-bottom));
+    background: var(--card); display: flex; 
+    padding-bottom: env(safe-area-inset-bottom);
+    border-top: 1px solid rgba(128,128,128,0.2);
 }
-.bottom-nav button { flex: 1; border: none; background: none; color: var(--text) !important; font-weight: bold; }
+.bottom-nav button { flex: 1; border: none; background: none; color: var(--text) !important; font-weight: 600; font-size: 14px; }
