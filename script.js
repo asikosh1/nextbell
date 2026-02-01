@@ -7,18 +7,19 @@ window.addEventListener('load', () => {
     setTimeout(() => {
         const splash = document.getElementById('splash-screen');
         if (splash) {
+            splash.style.transition = 'opacity 0.6s ease';
             splash.style.opacity = '0';
-            setTimeout(() => splash.remove(), 500);
+            setTimeout(() => splash.remove(), 600);
         }
-    }, 2000);
+    }, 1500);
 });
 
 function updateApp() {
     const now = new Date();
     const curTotal = now.getHours() * 60 + now.getMinutes();
     
-    document.getElementById('clock').innerText = 
-        `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    const clock = document.getElementById('clock');
+    if (clock) clock.innerText = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
     let html = "";
     let status = "Перемена";
@@ -48,15 +49,15 @@ function showScreen(name) {
 }
 
 function toggleTheme() {
-    const body = document.body;
-    const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    body.setAttribute('data-theme', newTheme);
+    const isDark = document.body.getAttribute('data-theme') === 'dark';
+    const newTheme = isDark ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
 }
 
-// Старт
 const savedTheme = localStorage.getItem('theme') || 'light';
 document.body.setAttribute('data-theme', savedTheme);
+if(document.getElementById('theme-toggle')) document.getElementById('theme-toggle').checked = (savedTheme === 'dark');
 
 setInterval(updateApp, 1000);
 updateApp();
@@ -65,20 +66,19 @@ function renderEditor() {
     const list = document.getElementById('edit-list');
     if(!list) return;
     list.innerHTML = mySchedule.map((l, i) => `
-        <div class="setting-item" style="padding:15px; border-bottom:1px solid #ccc;">
+        <div class="setting-item" style="padding:15px; border-bottom:1px solid rgba(128,128,128,0.2);">
             <input type="text" value="${l.name}" onchange="editLesson(${i}, 'name', this.value)" style="width:100%; margin-bottom:10px;">
-            <div style="display:flex; gap:10px;">
+            <div style="display:flex; gap:10px; align-items:center;">
                 <input type="time" value="${l.start}" onchange="editLesson(${i}, 'start', this.value)">
                 <input type="time" value="${l.end}" onchange="editLesson(${i}, 'end', this.value)">
-                <button onclick="removeLesson(${i})">🗑️</button>
+                <button onclick="removeLesson(${i})" style="background:none; border:none; font-size:18px;">🗑️</button>
             </div>
         </div>`).join('');
 }
 
 function editLesson(i, f, v) { mySchedule[i][f] = v; saveData(); }
-function addLesson() { mySchedule.push({name: "Урок", start: "08:00", end: "08:45"}); saveData(); renderEditor(); }
+function addLesson() { mySchedule.push({name: "Новый урок", start: "08:00", end: "08:45"}); saveData(); renderEditor(); }
 function removeLesson(i) { mySchedule.splice(i, 1); saveData(); renderEditor(); }
 function saveData() { localStorage.setItem('nextbell_data', JSON.stringify(mySchedule)); updateApp(); }
 
 renderEditor();
-showScreen('main');
