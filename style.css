@@ -7,28 +7,23 @@
     --primary: #2d5a27 !important; --accent: #1b3319 !important;
 }
 
-/* ПЛАВНОСТЬ */
-* { transition: background-color 0.4s ease, color 0.4s ease; }
+/* ПЛАВНОСТЬ И ЗАПРЕТ КОПИРОВАНИЯ */
+* { 
+    transition: background-color 0.4s ease, color 0.4s ease; 
+    -webkit-user-select: none; user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Разрешаем выделение только в полях ввода */
+input { -webkit-user-select: text; user-select: text; }
 
 body {
     background-color: #000; margin: 0; display: flex; 
     justify-content: center; align-items: center; height: 100vh; 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-    overflow: hidden; color: var(--text);
-    
-    /* ОТКЛЮЧАЕМ ВЫДЕЛЕНИЕ ТЕКСТА */
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none;      /* Windows/Edge */
-    user-select: none;         /* Стандарт */
+    font-family: -apple-system, system-ui, sans-serif; overflow: hidden;
 }
 
-/* Разрешаем выделение только внутри инпутов в настройках, чтобы можно было писать название урока */
-input, textarea {
-    -webkit-user-select: text;
-    user-select: text;
-}
-
-/* SPLASH SCREEN (Теперь черный) */
+/* SPLASH SCREEN (ЧЕРНЫЙ) */
 #splash-screen {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: #000 !important; display: flex; flex-direction: column;
@@ -38,39 +33,30 @@ input, textarea {
 .splash-text { color: #ffffff !important; font-size: 24px; margin-top: 20px; font-weight: bold; }
 
 @keyframes pulse {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.05); opacity: 0.8; }
-    100% { transform: scale(1); opacity: 1; }
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
 
 .phone-shell {
-    width: 100%; max-width: 400px; height: 100vh; max-height: 850px;
+    width: 100%; max-width: 450px; height: 100vh;
     background: var(--bg); position: relative; display: flex; flex-direction: column;
-    border: 8px solid #333; border-radius: 40px; overflow: hidden;
 }
 
-.app-screen { flex: 1; overflow-y: auto; padding-bottom: 80px; display: none; flex-direction: column; }
+.app-screen { flex: 1; overflow-y: auto; padding-bottom: 100px; display: none; flex-direction: column; }
 
-/* ТЕКСТ В ТЕМНОЙ ТЕМЕ */
-h2, h3, span, p, b, small { color: var(--text); }
+/* БЕЛЫЙ ШРИФТ В ТЕМНОЙ ТЕМЕ */
+h2, h3, span, p, div, b, small { color: var(--text) !important; }
 
-/* ИНПУТЫ FIX */
-input {
-    background: var(--card) !important; color: var(--text) !important; 
-    border: 1px solid rgba(128,128,128,0.3); padding: 12px; border-radius: 10px; 
-    -webkit-appearance: none; font-size: 16px;
-}
-
-.bottom-nav {
-    position: absolute; bottom: 0; width: 100%; height: 75px;
-    background: var(--card); display: flex; border-top: 1px solid rgba(128,128,128,0.2);
-}
-.bottom-nav button { flex: 1; border: none; background: none; color: var(--text); font-weight: bold; cursor: pointer; }
-
-.timer-card { background: var(--primary); color: #ffffff !important; margin: 15px; padding: 25px; border-radius: 20px; text-align: center; }
+.timer-card { background: var(--primary) !important; margin: 15px; padding: 25px; border-radius: 20px; text-align: center; }
 .timer-card * { color: #ffffff !important; }
 .time-now { font-size: 64px; font-weight: 800; margin: 0; }
 
 .lesson-item { background: var(--card); margin: 10px 15px; padding: 18px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 .lesson-item.active { border: 2px solid var(--primary); background: var(--accent); }
 
+.bottom-nav {
+    position: absolute; bottom: 0; width: 100%; height: 75px;
+    background: var(--card); display: flex; border-top: 1px solid rgba(128,128,128,0.2);
+}
+.bottom-nav button { flex: 1; border: none; background: none; color: var(--text) !important; font-weight: bold; }
