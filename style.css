@@ -1,57 +1,48 @@
 :root {
     --bg: #f8f9fa; --text: #1a1a1a; --card: #ffffff;
-    --primary: #4a753c; --accent: #e8f5e9;
+    --primary: #4a753c; --accent: #e8f5e9; --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 [data-theme="dark"] {
     --bg: #121212; --text: #ffffff; --card: #1e1e1e; --primary: #2d5a27; --accent: #1b3319;
 }
 
+/* ПЛАВНОСТЬ ДЛЯ ВСЕГО */
+* { transition: background-color var(--transition), color var(--transition), border-color var(--transition), transform 0.2s ease; }
+
 body {
-    background-color: #1a1a1a; margin: 0;
-    display: flex; justify-content: center; align-items: center;
-    height: 100vh; font-family: -apple-system, sans-serif; overflow: hidden;
+    background-color: #1a1a1a; margin: 0; display: flex; 
+    justify-content: center; align-items: center; height: 100vh; 
+    font-family: -apple-system, sans-serif; overflow: hidden;
+}
+
+/* ЭКРАН ЗАГРУЗКИ */
+#splash-screen {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #4a753c; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s;
+}
+.splash-logo { width: 100px; height: 100px; animation: pulse 1.5s infinite; }
+.splash-text { color: white; margin-top: 20px; font-weight: 800; }
+
+@keyframes pulse { 
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
 }
 
 .phone-shell {
     width: 100%; max-width: 400px; height: 100vh; max-height: 850px;
     background: var(--bg); position: relative; display: flex; flex-direction: column;
-    border: 8px solid #333; border-radius: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    overflow: hidden;
+    border: 8px solid #333; border-radius: 40px; overflow: hidden;
 }
 
-.app-screen {
-    flex: 1; overflow-y: auto; display: flex; flex-direction: column;
-    padding-bottom: 90px;
+/* ТЕМНАЯ ТЕМА ФИКС ДЛЯ WINDOWS/IOS */
+input, button, select {
+    background-color: var(--card); color: var(--text);
+    border: 1px solid rgba(128,128,128,0.2); -webkit-appearance: none;
 }
 
-/* ПОДСВЕТКА АКТИВНОГО УРОКА */
 .lesson-item.active {
-    border: 2px solid var(--primary);
-    background: var(--accent);
-    transform: scale(1.02);
+    background: var(--accent); border: 2px solid var(--primary);
 }
-
-.status-dot { color: #ff3b30; margin-left: 10px; animation: blink 1s infinite; }
-@keyframes blink { 50% { opacity: 0; } }
-
-/* ФИКС НАВИГАЦИИ */
-.bottom-nav {
-    position: absolute; bottom: 0; left: 0; width: 100%;
-    height: 75px; display: flex; align-items: center;
-    background: var(--card); border-top: 1px solid rgba(0,0,0,0.1); z-index: 100;
-}
-
-.bottom-nav button {
-    flex: 1; border: none; background: none; height: 100%;
-    font-size: 14px; color: var(--text); cursor: pointer; font-weight: bold;
-}
-
-@media (max-width: 450px) {
-    .phone-shell { border: none; border-radius: 0; max-height: 100vh; }
-}
-
-/* КАРТОЧКИ */
-.timer-card { background: var(--primary); color: white; margin: 15px; padding: 25px; border-radius: 20px; text-align: center; }
-.time-now { font-size: 64px; font-weight: 800; margin: 0; letter-spacing: -2px; }
-.lesson-item { background: var(--card); margin: 10px 15px; padding: 18px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: 0.3s; }
-.setting-item { background: var(--card); margin: 10px 15px; padding: 15px; border-radius: 12px; display: flex; }
