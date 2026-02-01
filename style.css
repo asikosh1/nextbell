@@ -1,84 +1,64 @@
-// Логика Splash Screen
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        const splash = document.getElementById('splash-screen');
-        splash.style.transition = 'opacity 0.5s ease';
-        splash.style.opacity = '0';
-        setTimeout(() => splash.remove(), 500);
-    }, 2000); // 2 секунды показа
-});
-
-let mySchedule = JSON.parse(localStorage.getItem('nextbell_data')) || [
-    { name: "Математика", start: "08:40", end: "09:35" },
-    { name: "Физика", start: "09:40", end: "10:25" }
-];
-
-function updateApp() {
-    const now = new Date();
-    const curH = now.getHours();
-    const curM = now.getMinutes();
-    const curTotal = curH * 60 + curM;
-    
-    document.getElementById('clock').innerText = 
-        `${String(curH).padStart(2, '0')}:${String(curM).padStart(2, '0')}`;
-
-    let html = "";
-    let status = "Уроков нет";
-
-    mySchedule.forEach(l => {
-        const [h1, m1] = l.start.split(':').map(Number);
-        const [h2, m2] = l.end.split(':').map(Number);
-        const s = h1 * 60 + m1;
-        const e = h2 * 60 + m2;
-
-        const isActive = curTotal >= s && curTotal < e;
-        if (isActive) status = `До конца урока: ${e - curTotal} мин`;
-
-        html += `<div class="lesson-item ${isActive ? 'active' : ''}">
-            <span><b>${l.name}</b><br><small>${l.start}-${l.end}</small></span>
-            ${isActive ? '<span>🔥</span>' : ''}
-        </div>`;
-    });
-
-    document.getElementById('status').innerText = status;
-    document.getElementById('schedule-list').innerHTML = html;
+:root {
+    --bg: #f8f9fa; --text: #1a1a1a; --card: #ffffff;
+    --primary: #4a753c; --accent: #e8f5e9;
+}
+[data-theme="dark"] {
+    --bg: #121212 !important; --text: #ffffff !important; --card: #1e1e1e !important;
+    --primary: #2d5a27 !important; --accent: #1b3319 !important;
 }
 
-function showScreen(name) {
-    document.querySelectorAll('.app-screen').forEach(s => s.style.display = 'none');
-    document.getElementById(`screen-${name}`).style.display = 'flex';
+/* ПЛАВНОСТЬ */
+* { transition: background-color 0.4s ease, color 0.4s ease; }
+
+body {
+    background-color: #000; margin: 0; display: flex; 
+    justify-content: center; align-items: center; height: 100vh; 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+    overflow: hidden; color: var(--text);
 }
 
-function toggleTheme() {
-    const body = document.body;
-    const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    body.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
+/* SPLASH SCREEN (Теперь черный) */
+#splash-screen {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #000 !important; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; z-index: 9999;
+}
+.splash-logo { width: 120px; height: 120px; animation: pulse 1.5s infinite; }
+.splash-text { color: #ffffff !important; font-size: 24px; margin-top: 20px; font-weight: bold; }
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
 }
 
-// Инициализация темы
-const savedTheme = localStorage.getItem('theme') || 'light';
-document.body.setAttribute('data-theme', savedTheme);
-
-setInterval(updateApp, 1000);
-updateApp();
-
-function renderEditor() {
-    const list = document.getElementById('edit-list');
-    if(!list) return;
-    list.innerHTML = mySchedule.map((l, i) => `
-        <div class="setting-item" style="display:flex; flex-direction:column; gap:5px; padding:10px;">
-            <input type="text" value="${l.name}" onchange="editLesson(${i}, 'name', this.value)">
-            <div style="display:flex; gap:10px;">
-                <input type="time" value="${l.start}" onchange="editLesson(${i}, 'start', this.value)">
-                <input type="time" value="${l.end}" onchange="editLesson(${i}, 'end', this.value)">
-                <button onclick="removeLesson(${i})">🗑️</button>
-            </div>
-        </div>`).join('');
+.phone-shell {
+    width: 100%; max-width: 400px; height: 100vh; max-height: 850px;
+    background: var(--bg); position: relative; display: flex; flex-direction: column;
+    border: 8px solid #333; border-radius: 40px; overflow: hidden;
 }
 
-function editLesson(i, f, v) { mySchedule[i][f] = v; saveData(); }
-function addLesson() { mySchedule.push({name: "Урок", start: "08:00", end: "08:45"}); saveData(); renderEditor(); }
-function removeLesson(i) { mySchedule.splice(i, 1); saveData(); renderEditor(); }
-function saveData() { localStorage.setItem('nextbell_data', JSON.stringify(mySchedule)); updateApp(); }
-renderEditor();
+.app-screen { flex: 1; overflow-y: auto; padding-bottom: 80px; display: none; flex-direction: column; }
+
+/* ТЕКСТ В ТЕМНОЙ ТЕМЕ */
+h2, h3, span, p, b, small { color: var(--text); }
+
+/* ИНПУТЫ FIX */
+input {
+    background: var(--card) !important; color: var(--text) !important; 
+    border: 1px solid rgba(128,128,128,0.3); padding: 12px; border-radius: 10px; 
+    -webkit-appearance: none; font-size: 16px;
+}
+
+.bottom-nav {
+    position: absolute; bottom: 0; width: 100%; height: 75px;
+    background: var(--card); display: flex; border-top: 1px solid rgba(128,128,128,0.2);
+}
+.bottom-nav button { flex: 1; border: none; background: none; color: var(--text); font-weight: bold; cursor: pointer; }
+
+.timer-card { background: var(--primary); color: #ffffff !important; margin: 15px; padding: 25px; border-radius: 20px; text-align: center; }
+.timer-card * { color: #ffffff !important; }
+.time-now { font-size: 64px; font-weight: 800; margin: 0; }
+
+.lesson-item { background: var(--card); margin: 10px 15px; padding: 18px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.lesson-item.active { border: 2px solid var(--primary); background: var(--accent); }
